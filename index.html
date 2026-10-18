@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Как управлять Minecraft CTNKEP через чат Twitch: примеры команд и правила использований.">
+  <title>CTNKEP — Minecraft из чата</title>
+  <style>
+    :root { color-scheme: light dark; }
+    body { max-width: 46rem; margin: 3rem auto; padding: 0 1.25rem; font: 1.05rem/1.65 system-ui, sans-serif; }
+    h1 { font-size: 1.9rem; line-height: 1.25; }
+    h2 { margin-top: 2rem; font-size: 1.25rem; }
+    a { color: LinkText; text-underline-offset: .15em; }
+    code { font-size: .95em; overflow-wrap: anywhere; }
+    dt { margin-top: 1rem; font-weight: 600; }
+    dd { margin: .15rem 0 0; }
+    li { margin: .55rem 0; }
+    #used-commands { list-style: none; padding: 0; }
+    #used-commands li { margin: .15rem 0; }
+    #sync-status { font-size: .9rem; }
+    footer { margin-top: 2rem; font-size: .9rem; }
+    @media (max-width: 32rem) { body { margin: 1.5rem auto; } h1 { font-size: 1.6rem; } }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Использованные команды</h1>
+    <p id="usage-mode">CTNKEP — Minecraft из чата</p>
+    <ul id="used-commands"><li>Загружаю список…</li></ul>
+    <p id="sync-status" role="status">Список обновляется автоматически примерно раз в минуту.</p>
+    <noscript><p>Для автоматического списка включи JavaScript. Гайд ниже доступен без него.</p></noscript>
+
+    <h2>Как управлять Minecraft из чата</h2>
+    <p>Пиши команды в <a href="https://www.twitch.tv/ctnkep">Twitch-чате CTNKEP</a>, чтобы влиять на игру. Например: <code>spawn creeper 10</code>. Префикс <code>!</code> не нужен, но с ним тоже работает.</p>
+
+    <h2>С чего начать</h2>
+    <p>Напиши <code>help</code> — StickerHere предложит одну ещё доступную команду. Между подсказками нужно подождать 10 секунд.</p>
+
+    <h2>Примеры команд</h2>
+    <p>Это примеры синтаксиса. Некоторые из этих команд уже могут быть использованы или запрещены; актуальную подсказку даст <code>help</code>.</p>
+    <dl>
+      <dt><code>spawn spider 255</code></dt>
+      <dd>Призвать 255 пауков. Максимум за один запрос spawn — 255.</dd>
+      <dt><code>spawn acacia_boat 10</code></dt>
+      <dd>Призвать 10 лодок.</dd>
+      <dt><code>summon creeper</code></dt>
+      <dd>Призвать одного крипера в позиции CTNKEP. Для количества используй spawn: у обычного summon аргумента количества нет.</dd>
+      <dt><code>setblock lava</code></dt>
+      <dd>Поставить лаву прямо у ног CTNKEP.</dd>
+      <dt><code>setblock ~ ~-1 ~ stone</code></dt>
+      <dd>Поставить камень под CTNKEP.</dd>
+      <dt><code>effect give CTNKEP poison 20 1</code></dt>
+      <dd>Дать отравление на 20 секунд с усилителем 1.</dd>
+      <dt><code>effect give CTNKEP nausea 5</code></dt>
+      <dd>Дать тошноту. Этот эффект ограничен пятью игровыми секундами.</dd>
+      <dt><code>kill</code></dt>
+      <dd>Убить CTNKEP.</dd>
+      <dt><code>seed</code></dt>
+      <dd>Показать сид мира в Minecraft.</dd>
+      <dt><code>fill stone 100</code></dt>
+      <dd>Заполнить камнем до 100 ближайших позиций вокруг CTNKEP.</dd>
+      <dt><code>replace grass_block acacia_log 100</code></dt>
+      <dd>Заменить до 100 ближайших блоков травы на акациевые брёвна. Поиск — в пределах 32 блоков по каждой оси.</dd>
+    </dl>
+    <p>Другие команды сервера тоже доступны: используй обычный синтаксис Minecraft. Команды выполняются с правами CTNKEP и из его позиции, если сама команда не меняет контекст.</p>
+
+    <h2>Два режима</h2>
+    <p><strong>One-time mode:</strong> одно общее использование типа команды на весь чат, пока стример не сбросит счётчик.</p>
+    <p><strong>Timeout mode:</strong> команда снова доступна после общего ожидания. Один моб через spawn — одна минута, 100 мобов — 100 минут. Другие команды по умолчанию ждут одну минуту. Таймер относится ко всему чату, а не к отдельному зрителю.</p>
+
+    <h2>Как считаются использования</h2>
+    <ul>
+      <li>Использования и ожидания общие для всех зрителей. В One-time mode повтор недоступен до явного сброса, в Timeout mode — до окончания таймера.</li>
+      <li>Каждый тип моба учитывается отдельно. <code>spawn creeper 10</code> и <code>summon creeper</code> расходуют одно и то же использование крипера. Другое количество его не возвращает.</li>
+      <li>У эффектов отдельно учитывается тип эффекта, у setblock — тип блока. Изменение длительности, усилителя или координат нового использования не даёт.</li>
+      <li>Смерть игрока не сбрасывает лимиты. Перезапуск сохраняет использования и срок ожидания. Успешно использованные команды видны справа в игре и вверху этой страницы.</li>
+      <li>Ошибка синтаксиса или неизвестный тип не тратят использование. StickerHere подскажет исправление, если найдёт подходящее; исправленную команду нужно отправить самому.</li>
+    </ul>
+
+    <h2>Чтобы было проще</h2>
+    <ul>
+      <li><code>minecraft:</code> у обычных команд, мобов, блоков и эффектов можно не писать.</li>
+      <li>Названия команд, мобов, блоков и эффектов можно писать любым регистром: <code>SETBLOCK DIAMOND_BLOCK</code> тоже работает. Ники, текст и NBT сохраняют свой регистр.</li>
+      <li>В коротких <code>summon creeper</code> и <code>setblock lava</code> координаты автоматически становятся <code>~ ~ ~</code>. Для команд с несколькими точками, например fill и clone, координаты укажи сам.</li>
+    </ul>
+  </main>
+  <footer>Команды работают через чат Twitch, когда CTNKEP находится на подключённом сервере. Список наверху показывает подтверждённые выполнения; неизвестный или частичный результат может оставаться учтённым сервером. Ручные запреты проверяет бот.</footer>
+  <script>
+    const list = document.getElementById('used-commands');
+    const mode = document.getElementById('usage-mode');
+    const status = document.getElementById('sync-status');
+    let snapshot = null;
+    let loading = false;
+
+    function render() {
+      if (!snapshot) return;
+      mode.textContent = 'CTNKEP · ' + (snapshot.usageMode === 'timeout' ? 'Timeout mode' : 'One-time mode');
+      const rows = snapshot.commands.map(command => {
+        const row = document.createElement('li');
+        const seconds = Math.max(0, Math.ceil(((Number(command.timeoutUntil) || 0) - Date.now()) / 1000));
+        const wait = seconds >= 60 ? Math.ceil(seconds / 60) + ' мин.' : seconds + ' сек.';
+        row.textContent = command.label + (snapshot.usageMode === 'timeout'
+          ? seconds > 0 ? ' — ещё ' + wait : ' — снова доступна' : '');
+        return row;
+      });
+      if (!rows.length) {
+        const empty = document.createElement('li');
+        empty.textContent = 'Пока нет использованных команд.';
+        rows.push(empty);
+      }
+      list.replaceChildren(...rows);
+    }
+
+    async function refresh() {
+      if (loading) return;
+      loading = true;
+      try {
+        const response = await fetch('https://raw.githubusercontent.com/CTNKEP/ctnkep.github.io/status/commands.json?v=' + Math.floor(Date.now() / 60000),
+          {cache: 'no-store', credentials: 'omit', referrerPolicy: 'no-referrer', signal: AbortSignal.timeout(15000)});
+        if (!response.ok) throw new Error('Snapshot unavailable');
+        const next = await response.json();
+        if (next.schemaVersion !== 1 || !['one_time', 'timeout'].includes(next.usageMode)
+            || !Number.isFinite(Date.parse(next.updatedAt)) || !Array.isArray(next.commands)
+            || next.commands.length > 1024 || next.commands.some(command => !command
+              || typeof command.label !== 'string' || command.label.length > 200)) throw new Error('Invalid snapshot');
+        snapshot = next;
+        render();
+        status.textContent = 'Данные от ' + new Date(next.updatedAt).toLocaleString('ru-RU') + '. Обновление примерно раз в минуту.';
+      } catch {
+        status.textContent = snapshot ? 'Не удалось обновить список. Показаны последние полученные данные.'
+          : 'Список пока недоступен. Узнать доступную команду можно через help в Twitch-чате.';
+      } finally {
+        loading = false;
+      }
+    }
+    refresh();
+    setInterval(refresh, 60000);
+    setInterval(render, 1000);
+  </script>
+</body>
+</html>
+
