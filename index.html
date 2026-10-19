@@ -27,7 +27,7 @@
     <h1>Использованные команды</h1>
     <p id="usage-mode">CTNKEP — Minecraft из чата</p>
     <ul id="used-commands"><li>Загружаю список…</li></ul>
-    <p id="sync-status" role="status">Список обновляется автоматически примерно раз в минуту.</p>
+    <p id="sync-status" role="status">Список обновляется автоматически.</p>
     <noscript><p>Для автоматического списка включи JavaScript. Гайд ниже доступен без него.</p></noscript>
 
     <h2>Как управлять Minecraft из чата</h2>
@@ -89,6 +89,7 @@
     const list = document.getElementById('used-commands');
     const mode = document.getElementById('usage-mode');
     const status = document.getElementById('sync-status');
+    const refreshIntervalMs = 5000;
     let snapshot = null;
     let loading = false;
 
@@ -115,7 +116,7 @@
       if (loading) return;
       loading = true;
       try {
-        const response = await fetch('https://raw.githubusercontent.com/CTNKEP/ctnkep.github.io/status/commands.json?v=' + Math.floor(Date.now() / 60000),
+        const response = await fetch('https://raw.githubusercontent.com/CTNKEP/ctnkep.github.io/status/commands.json?v=' + Math.floor(Date.now() / refreshIntervalMs),
           {cache: 'no-store', credentials: 'omit', referrerPolicy: 'no-referrer', signal: AbortSignal.timeout(15000)});
         if (!response.ok) throw new Error('Snapshot unavailable');
         const next = await response.json();
@@ -125,7 +126,8 @@
               || typeof command.label !== 'string' || command.label.length > 200)) throw new Error('Invalid snapshot');
         snapshot = next;
         render();
-        status.textContent = 'Данные от ' + new Date(next.updatedAt).toLocaleString('ru-RU') + '. Обновление примерно раз в минуту.';
+        status.textContent = 'Данные от ' + new Date(next.updatedAt).toLocaleString('ru-RU')
+          + '. Проверка каждые ' + refreshIntervalMs / 1000 + ' сек.; возможна задержка GitHub.';
       } catch {
         status.textContent = snapshot ? 'Не удалось обновить список. Показаны последние полученные данные.'
           : 'Список пока недоступен. Узнать доступную команду можно через help в Twitch-чате.';
@@ -134,9 +136,8 @@
       }
     }
     refresh();
-    setInterval(refresh, 60000);
+    setInterval(refresh, refreshIntervalMs);
     setInterval(render, 1000);
   </script>
 </body>
 </html>
-
